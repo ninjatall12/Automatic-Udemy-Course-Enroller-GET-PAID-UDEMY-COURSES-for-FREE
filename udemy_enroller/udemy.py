@@ -49,7 +49,7 @@ class UdemyActions:
     HEADERS = {
         "origin": "https://www.udemy.com",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 "
-                      "Safari/537.36",
+        "Safari/537.36",
         "accept": "application/json, text/plain, */*",
         "accept-encoding": "gzip, deflate, br",
         "content-type": "application/json;charset=UTF-8",
@@ -217,9 +217,9 @@ class UdemyActions:
             )
             coupon_valid = False
         if not bool(
-                coupon_details["price_text"]["data"]["pricing_result"]["list_price"][
-                    "amount"
-                ]
+            coupon_details["price_text"]["data"]["pricing_result"]["list_price"][
+                "amount"
+            ]
         ):
             logger.debug("Skipping course as it is always FREE")
             coupon_valid = False
@@ -251,9 +251,9 @@ class UdemyActions:
         is_preferred_category = True
 
         if (
-                course_details["primary_category"]["title"] not in self.settings.categories
-                and course_details["primary_subcategory"]["title"]
-                not in self.settings.categories
+            course_details["primary_category"]["title"] not in self.settings.categories
+            and course_details["primary_subcategory"]["title"]
+            not in self.settings.categories
         ):
             logger.debug("Skipping course as it does not have a wanted category")
             is_preferred_category = False
@@ -310,7 +310,9 @@ class UdemyActions:
             if self.is_enrolled(course_id):
                 self.counter_already_enroled += 1
 
-                logger.info(f"Already enrolled in: {course_identifier} --> {self.counter_already_enroled}")
+                logger.info(
+                    f"Already enrolled in: {course_identifier} --> {self.counter_already_enroled}"
+                )
                 return UdemyStatus.ALREADY_ENROLLED.value
 
             if self.user_has_preferences:
@@ -342,11 +344,11 @@ class UdemyActions:
         return int(soup.find("body")["data-clp-course-id"])
 
     def _checkout(
-            self,
-            course_id: int,
-            coupon_code: str,
-            course_identifier: str,
-            retry: bool = False
+        self,
+        course_id: int,
+        coupon_code: str,
+        course_identifier: str,
+        retry: bool = False,
     ) -> str:
         """
         Checkout process for the course and coupon provided
@@ -375,7 +377,9 @@ class UdemyActions:
             result = checkout_result.json()
             if result["status"] == "succeeded":
                 self.counter_enroled += 1
-                logger.info(f"Successfully enrolled: {course_identifier} --> {self.counter_enroled}")
+                logger.info(
+                    f"Successfully enrolled: {course_identifier} --> {self.counter_enroled}"
+                )
                 self._add_enrolled_course(course_id)
                 return UdemyStatus.ENROLLED.value
             elif result["status"] == "failed":
