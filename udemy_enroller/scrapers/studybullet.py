@@ -110,7 +110,7 @@ class StudyBulletScraper(BaseScraper):
         if text is not None:
             soup = BeautifulSoup(text.decode("utf-8"), "html.parser")
             udemy_link = (
-                soup.find("span", class_="rh_button_wrapper").find("a").get("href")
+                soup.find("span", class_="button_cont").find("a").get("href")
             )
             return udemy_link
 
