@@ -95,6 +95,7 @@ def redeem_courses(
     tutorialbar_enabled: bool,
     discudemy_enabled: bool,
     coursevania_enabled: bool,
+    studybullet_enabled: bool,
     max_pages: Union[int, None],
 ) -> None:
     """
@@ -102,6 +103,7 @@ def redeem_courses(
 
     :param Settings settings: Core settings used for Udemy
     :param bool freebiesglobal_enabled: Boolean signifying if freebiesglobal scraper should run
+    :param bool studybullet_enabled: Boolean signifying if freebiesglobal scraper should run
     :param bool tutorialbar_enabled: Boolean signifying if tutorialbar scraper should run
     :param bool discudemy_enabled: Boolean signifying if discudemy scraper should run
     :param bool coursevania_enabled: Boolean signifying if coursevania scraper should run
@@ -114,7 +116,8 @@ def redeem_courses(
             tutorialbar_enabled,
             discudemy_enabled,
             coursevania_enabled,
-            max_pages,
+            studybullet_enabled,
+            max_pages
         )
         _redeem_courses(settings, scrapers)
     except Exception as e:
