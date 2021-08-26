@@ -26,8 +26,9 @@ def determine_if_scraper_enabled(
     freebiesglobal_enabled: bool,
     tutorialbar_enabled: bool,
     discudemy_enabled: bool,
+    studybullet_enabled: bool,
     coursevania_enabled: bool,
-) -> tuple[bool, bool, bool, bool]:
+) -> tuple[bool, bool, bool, bool, bool]:
     """
     Determine what scrapers should be enabled and disabled
 
@@ -38,19 +39,22 @@ def determine_if_scraper_enabled(
         and not tutorialbar_enabled
         and not discudemy_enabled
         and not coursevania_enabled
+        and not studybullet_enabled
     ):
         # Set all to True
         (
             freebiesglobal_enabled,
             tutorialbar_enabled,
+            studybullet_enabled,
             discudemy_enabled,
             coursevania_enabled,
-        ) = (True, True, True, True)
+        ) = (True, True, True, True, True)
 
     return (
         freebiesglobal_enabled,
         tutorialbar_enabled,
         discudemy_enabled,
+        studybullet_enabled,
         coursevania_enabled,
     )
 
@@ -60,6 +64,7 @@ def run(
     tutorialbar_enabled: bool,
     discudemy_enabled: bool,
     coursevania_enabled: bool,
+    studybullet_enabled: bool,
     max_pages: Union[int, None],
     delete_settings: bool,
 ):
@@ -69,6 +74,7 @@ def run(
     :param bool tutorialbar_enabled:
     :param bool discudemy_enabled:
     :param bool coursevania_enabled:
+    :param bool studybullet_enabled:
     :param int max_pages: Max pages to scrape from sites (if pagination exists)
     :param bool delete_settings: Determines if we should delete old settings file
     :return:
@@ -80,7 +86,8 @@ def run(
         tutorialbar_enabled,
         discudemy_enabled,
         coursevania_enabled,
-        max_pages,
+        studybullet_enabled,
+        max_pages
     )
 
 
@@ -121,6 +128,13 @@ def parse_args() -> Namespace:
     )
 
     parser.add_argument(
+        "--studybullet",
+        action="store_true",
+        default=False,
+        help="Run studybullet scraper",
+    )
+
+    parser.add_argument(
         "--max-pages",
         type=int,
         default=5,
@@ -155,11 +169,13 @@ def main():
             tutorialbar_enabled,
             discudemy_enabled,
             coursevania_enabled,
+            studybullet_enabled,
         ) = determine_if_scraper_enabled(
-            args.freebiesglobal, args.tutorialbar, args.discudemy, args.coursevania
+            args.freebiesglobal, args.tutorialbar, args.discudemy, args.coursevania, args.studybullet
         )
         run(
             freebiesglobal_enabled,
+            studybullet_enabled,
             tutorialbar_enabled,
             discudemy_enabled,
             coursevania_enabled,
