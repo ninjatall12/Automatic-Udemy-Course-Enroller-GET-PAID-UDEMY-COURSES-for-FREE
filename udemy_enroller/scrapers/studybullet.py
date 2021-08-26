@@ -16,7 +16,7 @@ class StudyBulletScraper(BaseScraper):
     """
 
     DOMAIN = "https://studybullet.com"
-    AD_DOMAINS = ("https://googleads.g.doubleclick.net","https://telegram.me","https://adclick.g.doubleclick.net")
+    AD_DOMAINS = ("https://googleads.g.doubleclick.net","https://telegram.me","https://adclick.g.doubleclick.net","https://youtu.be")
 
     def __init__(self, enabled, max_pages=None):
         super().__init__()
