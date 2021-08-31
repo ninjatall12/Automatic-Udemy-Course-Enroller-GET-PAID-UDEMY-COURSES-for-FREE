@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import datetime
+import requests
 from typing import List
 
 from bs4 import BeautifulSoup
@@ -30,7 +31,6 @@ class StudyBulletScraper(BaseScraper):
     async def run(self) -> List:
         """
         Called to gather the udemy links
-
         :return: List of udemy course links
         """
         links = await self.get_links()
@@ -43,15 +43,15 @@ class StudyBulletScraper(BaseScraper):
     async def get_links(self) -> List:
         """
         Scrape udemy links from Studybullet.com
-
         :return: List of udemy course urls
         """
         studybullet_links = []
         self.current_page += 1
-        coupons_data = await get(
+        coupons_data = requests.get(
             f"{self.DOMAIN}/{x.year}/{month}/{x.day}/page/{self.current_page}"
         )
-        soup = BeautifulSoup(coupons_data.decode("utf-8"),"html.parser")
+        coupons_data.encoding="utf-8"
+        soup = BeautifulSoup(coupons_data.text,"html.parser")
 
         for course_card in soup.find_all('a',class_='thumbnail-link'
         ):
@@ -71,7 +71,6 @@ class StudyBulletScraper(BaseScraper):
     async def get_udemy_course_link(cls, url: str) -> str:
         """
         Gets the udemy course link
-
         :param str url: The url to scrape data from
         :return: Coupon link of the udemy course
         """
@@ -86,7 +85,6 @@ class StudyBulletScraper(BaseScraper):
     async def gather_udemy_course_links(self, courses: List[str]):
         """
         Async fetching of the udemy course links from studybullet.com
-
         :param list courses: A list of studybullet.com course links we want to fetch the udemy links for
         :return: list of udemy links
         """
@@ -100,7 +98,6 @@ class StudyBulletScraper(BaseScraper):
     def _get_last_page(soup: BeautifulSoup) -> int:
         """
         Extract the last page number to scrape
-
         :param soup:
         :return: The last page number to scrape
         """
