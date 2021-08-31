@@ -18,6 +18,7 @@ The code scrapes course links and coupons from:
  - [discudemy.com](https://discudemy.com)
  - [coursevania.com](https://coursevania.com)
  - [freebiesglobal.com](https://freebiesglobal.com) -> _New_
+ - [studybullet.com](https://studybullet.com) -> _New_
 
 In case of any bugs or issues, please open an issue in github.
 
