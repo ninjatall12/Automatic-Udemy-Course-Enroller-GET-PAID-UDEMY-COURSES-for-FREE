@@ -49,7 +49,7 @@ class StudyBulletScraper(BaseScraper):
         freebiesglobal_links = []
         self.current_page += 1
         coupons_data = await get(
-            f"{self.DOMAIN}/{x.year}/{month}/{x.day}/page/{self.current_page}"
+            f"{self.DOMAIN}/page/{self.current_page}"
         )
         soup = BeautifulSoup(coupons_data.decode("utf-8"),"html.parser")
 
